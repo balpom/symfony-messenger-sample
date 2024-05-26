@@ -29,7 +29,7 @@ return [
     Connection::class => function () {
         $dsnParser = new DsnParser();
         $connectionParams = $dsnParser
-                ->parse('pdo-sqlite:////var/www/symfony/messenger/data/queue.sqlite');
+                ->parse('pdo-sqlite:////' . __DIR__ . '/../data/queue.sqlite');
         $connection = DriverManager::getConnection($connectionParams);
 
         $configuration = []; // See DEFAULT_OPTIONS in DoctrineConnection.
