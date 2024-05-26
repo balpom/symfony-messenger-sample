@@ -30,6 +30,7 @@ php tests/send.php
 ```
 It runs a simple script that adds several messages to the queue.
 After this, in first console window you may see, how Worker "sending" SMS.
+
 Run the command:
 ```bash
 php bin/console messenger:stop-workers
