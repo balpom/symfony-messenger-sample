@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use DI\ContainerBuilder;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Logger\ConsoleLogger;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Messenger\Command\ConsumeMessagesCommand;
+use Symfony\Component\Messenger\Command\StopWorkersCommand;
+use Symfony\Component\Messenger\EventListener\StopWorkerOnRestartSignalListener;
+use Symfony\Component\Messenger\RoutableMessageBus;
+
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions(__DIR__ . '/../config/dependencies.php');
+$container = $containerBuilder->build();
+
+$output = new ConsoleOutput();
+
+$cacheItemPool = $container->get(CacheItemPoolInterface::class);
+
+// Else php bin/console messenger:stop-workers Command do not work (Workers don't die).
+// moreover, the message "[OK] Signal successfully sent to stop any running workers."
+// is displayed at the same time.
+$eventDispatcher = new EventDispatcher();
+$eventDispatcher->addSubscriber(new StopWorkerOnRestartSignalListener($cacheItemPool));
+
+$commands = [
+    new ConsumeMessagesCommand(
+            new RoutableMessageBus($container),
+            $container,
+            $eventDispatcher,
+            new ConsoleLogger($output, [])
+    ),
+    new StopWorkersCommand($cacheItemPool)
+];
+
+$application = new Application('Console');
+$application->addCommands($commands);
+$application->run(null, $output);
