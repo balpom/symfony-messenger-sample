@@ -50,6 +50,7 @@ php tests/sendmany.php
 ```
 It runs a simple script that adds many several messages to the queue.
 After this, in previously opened consoles you may see, how several Workers "sending" SMS.
+
 Run the command:
 ```bash
 php bin/console messenger:stop-workers
