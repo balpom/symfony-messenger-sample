@@ -12,7 +12,7 @@ Everything was tested in Linux.
 ### Installation
 #### Using composer (recommended)
 ```bash
-composer require balpom/symfony-messenger-sample
+composer create balpom/symfony-messenger-sample
 ```
 
 ## How to use
@@ -56,3 +56,4 @@ Run the command:
 php bin/console messenger:stop-workers
 ```
 It stop all Workers executions.
+
