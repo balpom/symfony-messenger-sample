@@ -23,6 +23,7 @@ Open console window. Run the command:
 php bin/console messenger:consume doctrine-async
 ```
 It starts simple Worker, which imitate SMS sending. Now it is waiting for messages to be sent from the queue, which is still empty.
+
 Open another console window. Run the command:
 ```bash
 php tests/send.php
