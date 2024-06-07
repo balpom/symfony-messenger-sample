@@ -20,6 +20,6 @@ foreach ($messages as $message) {
     $sms = new SmsNotification($message);
     sleep(rand(1, 2));
     $bus->dispatch($sms, [new BusNameStamp($busName)]);
-    $bus->dispatch($sms);
+    //$bus->dispatch($sms);
     echo 'Added to query SMS: ' . $message . PHP_EOL;
 }
