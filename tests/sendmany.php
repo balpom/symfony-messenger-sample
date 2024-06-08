@@ -15,11 +15,13 @@ $busName = 'message-bus';
 $bus = $container->get($busName);
 
 $messages = ['First message', 'Second message', 'Third message', 'Fourth message', 'LAST message'];
-for ($i = 1; $i <= 20; $i++) {
+
+for ($i = 1; $i <= 2000; $i++) {
     foreach ($messages as $message) {
         $message = $i . ' --- ' . date("Y-m-d H:i:s") . ' ' . $message;
         $sms = new SmsNotification($message);
         //sleep(rand(1, 2));
+        //usleep(rand(1, 10));
         $bus->dispatch($sms, [new BusNameStamp($busName)]);
         echo 'Added to query SMS: ' . $message . PHP_EOL;
     }
