@@ -30,8 +30,8 @@ return [
         $dsnParser = new DsnParser();
         $connectionParams = $dsnParser
                 ->parse('pdo-sqlite:////' . __DIR__ . '/../data/queue.sqlite');
+        //->parse('pdo-sqlite:////tmp/data/queue.sqlite');
         $connection = DriverManager::getConnection($connectionParams);
-
         $configuration = []; // See DEFAULT_OPTIONS in DoctrineConnection.
 
         return new Connection($configuration, $connection);
