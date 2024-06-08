@@ -15,8 +15,8 @@ $busName = 'message-bus';
 $bus = $container->get($busName);
 
 $message = 'Simple message';
-$total = 1000000;
-echo 'RAM drive: Start ' . $total . ' messages adding...' . PHP_EOL;
+$total = 1000;
+echo 'Start ' . $total . ' messages adding...' . PHP_EOL;
 $start = microtime(true);
 for ($i = 1; $i <= $total; $i++) {
     $sms = new SmsNotification($message);
